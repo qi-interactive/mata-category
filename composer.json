@@ -16,5 +16,8 @@
         "psr-4": {
             "mata\\category\\": ""
         }
+    },
+    "extra": {
+        "bootstrap": "mata\\category\\Bootstrap"
     }
 }
