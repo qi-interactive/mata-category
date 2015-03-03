@@ -1,25 +1,19 @@
 <?php 
 
-namespace matacms\settings;
+namespace mata\category;
 
-use yii\base\BootstrapInterface;
+use mata\category\behaviors\CategoryActiveFormBehavior;
 use yii\base\Event;
-use yii\db\BaseActiveRecord;
-use mata\keyvalue\models\KeyValue;
-use matacms\settings\models\Setting;
 use matacms\widgets\ActiveField;
+use mata\base\MessageEvent;
 
-class Bootstrap implements BootstrapInterface {
+class Bootstrap extends \mata\base\Bootstrap {
 
 	public function bootstrap($app) {
 
-		Event::on(ActiveField::className(), ActiveField::EVENT_INIT_DONE, function($event) {
-			echo "CAUGHT";
+		Event::on(ActiveField::className(), ActiveField::EVENT_INIT_DONE, function(MessageEvent $event) {
+			$event->getMessage()->attachBehavior('category', new CategoryActiveFormBehavior());
 		});
-
 	}
 
 }
-
-
-// $this->attachBehavior('category', new CategoryActiveFormBehavior());
