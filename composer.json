@@ -1,5 +1,5 @@
 {
-    "name": "mata/category",
+    "name": "mata/mata-category",
     "description": "Manages categories for AR models",
     "keywords": ["yii2", "mata-category", "category", "mata"],
     "type": "yii2-extension",
