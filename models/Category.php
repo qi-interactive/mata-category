@@ -4,6 +4,7 @@ namespace mata\category\models;
 
 use Yii;
 use mata\category\models\CategoryItem;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "{{%mata_category}}".
@@ -14,8 +15,8 @@ use mata\category\models\CategoryItem;
  *
  * @property MataCategoryitem[] $mataCategoryitems
  */
-class Category extends \matacms\db\ActiveRecord
-{
+class Category extends \matacms\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
@@ -24,13 +25,17 @@ class Category extends \matacms\db\ActiveRecord
         return '{{%mata_category}}';
     }
 
+    public static function find() {
+      return new CategoryQuery(get_called_class());
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-        [['Name', 'URI'], 'required'],
+        [['Name', 'URI', 'Grouping'], 'required'],
         [['Name'], 'string'],
         [['URI'], 'string', 'max' => 255]
         ];
@@ -50,7 +55,29 @@ class Category extends \matacms\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMataCategoryitems() {
-        return $this->hasMany(MataCategoryItem::className(), ['CategoryId' => 'Id']);
+    public function getItems() {
+        return $this->hasMany(CategoryItem::className(), ['CategoryId' => 'Id']);
     }
+
+    public static function generateGroupingFromObject($obj) {
+        return get_class($obj);
+    }
+}
+
+
+class CategoryQuery extends ActiveQuery {
+    /**
+     *  Categories for various models / groups will be stored in one table. 
+     * The grouping allows to differentiate between categories belonging to one, but not another.
+     * For instance, ->grouping("books") or ->grouping($postModel) will return different results. 
+     */ 
+    public function grouping($grouping) {
+
+        if (is_object($grouping))
+            $grouping = self::generateGroupingFromObject($grouping);
+
+        $this->andWhere(['Grouping' => $grouping]);
+        return $this;
+    }
+
 }

@@ -21,7 +21,8 @@ class m150303_162412_init extends Migration {
 		$this->createTable('{{%mata_category}}', [
 			'Id'                   => Schema::TYPE_PK,
 			'Name'             => Schema::TYPE_TEXT . ' NOT NULL',
-			'URI'	=> Schema::TYPE_STRING . '(255) NOT NULL'
+			'URI'	=> Schema::TYPE_STRING . '(255) NOT NULL',
+			'Grouping' => Schema::TYPE_STRING . '(255) NOT NULL'
 			]);
 
 		$this->createTable('{{%mata_categoryitem}}', [

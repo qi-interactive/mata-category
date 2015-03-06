@@ -4,6 +4,9 @@ namespace mata\category\models;
 
 use Yii;
 use mata\category\models\Category;
+use mata\behaviors\IncrementalBehavior;
+use yii\db\ActiveQuery;
+
 /**
  * This is the model class for table "{{%mata_categoryitem}}".
  *
@@ -15,15 +18,24 @@ use mata\category\models\Category;
  */
 class CategoryItem extends \matacms\db\ActiveRecord {
 
+    const REQ_PARAM_CATEGORY_GROUPING = "category-item-category-grouping";
+    const REQ_PARAM_CATEGORY_ID = "category-item-category-id";
+
     public function behaviors() {
-       return [
-       [
-           'class' => IncrementalBehavior::className(),
-           'findBy' => "CategoryId",
-           'incrementField' => "Order"
-       ]
-       ];
-   }
+     return [
+     [
+     'class' => IncrementalBehavior::className(),
+     'findBy' => "CategoryId",
+     'incrementField' => "Order"
+     ]
+     ];
+ }
+
+
+ public static function find() {
+   return new CategoryItemQuery(get_called_class());
+}
+
     /**
      * @inheritdoc
      */
@@ -38,7 +50,7 @@ class CategoryItem extends \matacms\db\ActiveRecord {
     {
         return [
         [['CategoryId', 'DocumentId', 'Order'], 'required'],
-        [['CategoryId', 'Order'], 'integer'],
+        [['Order'], 'integer'],
         [['DocumentId'], 'string', 'max' => 64]
         ];
     }
@@ -61,4 +73,18 @@ class CategoryItem extends \matacms\db\ActiveRecord {
     public function getCategory() {
         return $this->hasOne(Category::className(), ['Id' => 'CategoryId']);
     }
+}
+
+
+class CategoryItemQuery extends ActiveQuery {
+
+    public function forItem($item) {
+
+        if (is_object($item))
+            $item = $item->getDocumentId();
+
+        $this->andWhere(['DocumentId' => $item]);
+        return $this;
+    }
+
 }
