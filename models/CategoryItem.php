@@ -22,19 +22,19 @@ class CategoryItem extends \matacms\db\ActiveRecord {
     const REQ_PARAM_CATEGORY_ID = "category-item-category-id";
 
     public function behaviors() {
-     return [
-     [
-     'class' => IncrementalBehavior::className(),
-     'findBy' => "CategoryId",
-     'incrementField' => "Order"
-     ]
-     ];
+       return [
+       [
+       'class' => IncrementalBehavior::className(),
+       'findBy' => "CategoryId",
+       'incrementField' => "Order"
+       ]
+       ];
+   }
+
+
+   public static function find() {
+     return new CategoryItemQuery(get_called_class());
  }
-
-
- public static function find() {
-   return new CategoryItemQuery(get_called_class());
-}
 
     /**
      * @inheritdoc
