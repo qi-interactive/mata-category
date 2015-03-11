@@ -74,7 +74,7 @@ class CategoryQuery extends ActiveQuery {
     public function grouping($grouping) {
 
         if (is_object($grouping))
-            $grouping = self::generateGroupingFromObject($grouping);
+            $grouping = Category::generateGroupingFromObject($grouping);
 
         $this->andWhere(['Grouping' => $grouping]);
         return $this;

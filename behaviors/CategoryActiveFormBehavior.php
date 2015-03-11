@@ -6,6 +6,7 @@ use Yii;
 use mata\category\models\Category;
 use mata\category\models\CategoryItem;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 
 class CategoryActiveFormBehavior extends  \yii\base\Behavior {
 
@@ -16,16 +17,13 @@ class CategoryActiveFormBehavior extends  \yii\base\Behavior {
 		$this->owner->adjustLabelFor($options);
 		$this->owner->labelOptions["label"] = "Category"; 
 
-		// $this->owner->parts['{input}'] = Html::activeTextInput($this->owner->model, $this->owner->attribute, array_merge([
-		// 	"name" => CategoryItem::REQ_PARAM_CATEGORY_ID,
-		// 	"value" => 1,
-		// 	], $options));
+		$items = ArrayHelper::map(Category::find()->grouping($this->owner->model)->all(), 'Id', 'Name');
+		$value = CategoryItem::find()->forItem($this->owner->model)->one();
 
+		if ($value != null)
+			$options["value"] = $value->CategoryId;
 
-print_r($options);
-
-$options["value"] = 1;
-		$this->owner->selectize($options);
+		$this->owner->autocomplete($items, $options);
 
 		$grouping = isset($options["grouping"]) ?: Category::generateGroupingFromObject($this->owner->model);
 
@@ -33,8 +31,6 @@ $options["value"] = 1;
 			"name" => CategoryItem::REQ_PARAM_CATEGORY_GROUPING,
 			"value" => $grouping
 			]);
-
-
 
 		return $this->owner;
 	}
