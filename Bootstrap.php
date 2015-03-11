@@ -20,7 +20,6 @@ class Bootstrap extends \mata\base\Bootstrap {
 			$event->getMessage()->attachBehavior('category', new CategoryActiveFormBehavior());
 		});
 
-
 		Event::on(Controller::class, Controller::EVENT_MODEL_UPDATED, function(\matacms\base\MessageEvent $event) {
 			$this->processSave($event->getMessage());
 		});
@@ -32,7 +31,7 @@ class Bootstrap extends \mata\base\Bootstrap {
 	}
 
 	private function processSave($model) {
-		
+
 		if (empty($categoryId = Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID)))
 			return;
 
@@ -44,24 +43,23 @@ class Bootstrap extends \mata\base\Bootstrap {
 
 		$categoryItem = new CategoryItem();
 		$categoryItem->attributes = [
-			"CategoryId" => $categoryId,
-			"DocumentId" => $documentId
+		"CategoryId" => $categoryId,
+		"DocumentId" => $documentId
 		];
 
 		try {
-		// Add error handling. Notify the user that the base model has been saved?
-		$categoryItem->save();
+			if ($categoryItem->save() == false)
+				throw new \yii\web\ServerErrorHttpException($categoryItem->getTopError());
 
-	} catch(yii\db\IntegrityException $e) {
+		} catch(yii\db\IntegrityException $e) {
 
 		// Create the missing category
-		
 
-		$categoryItem->save();
+			$categoryItem->save();
 
 		// echo $e;
 		// exit;
-	}
+		}
 
 	}
 }
