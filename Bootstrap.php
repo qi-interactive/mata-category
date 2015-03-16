@@ -7,6 +7,7 @@ use mata\category\behaviors\CategoryActiveFormBehavior;
 use yii\base\Event;
 use matacms\widgets\ActiveField;
 use mata\base\MessageEvent;
+use mata\category\models\Category;
 use mata\category\models\CategoryItem;
 
 //TODO Dependency on matacms
@@ -53,12 +54,20 @@ class Bootstrap extends \mata\base\Bootstrap {
 
 		} catch(yii\db\IntegrityException $e) {
 
-		// Create the missing category
+		
+			$category = new Category();
+			$category->attributes = [
+				"Name" => Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID),
+				"URI" => Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID),
+				"Grouping" => Category::generateGroupingFromObject($model)
+			]; 
 
+			if (!$category->save())
+				throw new \yii\web\ServerErrorHttpException($category->getTopError());
+
+			$categoryItem->CategoryId = $category->Id;
 			$categoryItem->save();
 
-		// echo $e;
-		// exit;
 		}
 
 	}

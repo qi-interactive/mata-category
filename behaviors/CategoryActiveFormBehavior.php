@@ -5,7 +5,7 @@ namespace mata\category\behaviors;
 use Yii;
 use mata\category\models\Category;
 use mata\category\models\CategoryItem;
-use yii\helpers\Html;
+use matacms\helpers\Html;
 use yii\helpers\ArrayHelper;
 
 class CategoryActiveFormBehavior extends  \yii\base\Behavior {
