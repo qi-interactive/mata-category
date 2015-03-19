@@ -33,7 +33,7 @@ class Bootstrap extends \mata\base\Bootstrap {
 
 	private function processSave($model) {
 
-		if (empty($categoryId = Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID)))
+		if (empty($categories = Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID)))
 			return;
 
 		$documentId = $model->getDocumentId();
@@ -42,31 +42,31 @@ class Bootstrap extends \mata\base\Bootstrap {
 			"DocumentId" => $documentId
 			]);
 
-		$categoryItem = new CategoryItem();
-		$categoryItem->attributes = [
-		"CategoryId" => $categoryId,
-		"DocumentId" => $documentId
-		];
+		foreach ($categories as $category) {
 
-		try {
-			if ($categoryItem->save() == false)
-				throw new \yii\web\ServerErrorHttpException($categoryItem->getTopError());
+			$categoryModel = Category::find()->where(["Name" => $category, 'Grouping' => Category::generateGroupingFromObject($model)])->one();
 
-		} catch(yii\db\IntegrityException $e) {
-
-		
-			$category = new Category();
-			$category->attributes = [
+			if ($categoryModel == null) {
+				$categoryModel = new Category();
+				$categoryModel->attributes = [
 				"Name" => Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID),
 				"URI" => Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID),
 				"Grouping" => Category::generateGroupingFromObject($model)
-			]; 
+				]; 
 
-			if (!$category->save())
-				throw new \yii\web\ServerErrorHttpException($category->getTopError());
+				if (!$categoryModel->save())
+					throw new \yii\web\ServerErrorHttpException($categoryModel->getTopError());
 
-			$categoryItem->CategoryId = $category->Id;
-			$categoryItem->save();
+			}
+			
+			$categoryItem = new CategoryItem();
+			$categoryItem->attributes = [
+			"CategoryId" => $categoryModel->Id,
+			"DocumentId" => $documentId
+			];
+			
+			if ($categoryItem->save() == false)
+				throw new \yii\web\ServerErrorHttpException($categoryItem->getTopError());
 
 		}
 
