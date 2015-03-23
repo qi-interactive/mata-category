@@ -80,4 +80,9 @@ class CategoryQuery extends ActiveQuery {
         return $this;
     }
 
+    public function forWorkProjects() {
+        $this->join('INNER JOIN', 'mata_categoryitem', 'mata_categoryitem.CategoryId = mata_category.Id');
+        return $this;
+    }
+
 }
