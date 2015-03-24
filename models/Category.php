@@ -82,6 +82,7 @@ class CategoryQuery extends ActiveQuery {
 
     public function forWorkProjects() {
         $this->join('INNER JOIN', 'mata_categoryitem', 'mata_categoryitem.CategoryId = mata_category.Id');
+        $this->orderBy('Name ASC');
         return $this;
     }
 
