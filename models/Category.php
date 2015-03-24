@@ -77,6 +77,7 @@ class CategoryQuery extends ActiveQuery {
             $grouping = Category::generateGroupingFromObject($grouping);
 
         $this->andWhere(['Grouping' => $grouping]);
+        $this->orderBy('Name ASC');
         return $this;
     }
 
