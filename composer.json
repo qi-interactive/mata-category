@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "mata\\category\\": ["../../../mata-cms/modules/mata/category", ""]
+            "mata\\category\\": ["../../../mata-cms/particulars/mata/mata-category", ""]
         }
     },
     "extra": {
