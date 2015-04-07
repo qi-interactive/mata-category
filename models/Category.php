@@ -27,7 +27,7 @@ class Category extends \matacms\db\ActiveRecord {
 
     public static function find() {
       return new CategoryQuery(get_called_class());
-    }
+  }
 
     /**
      * @inheritdoc
@@ -86,5 +86,16 @@ class CategoryQuery extends ActiveQuery {
         $this->orderBy('Name ASC');
         return $this;
     }
+
+    public function forItem($item) {
+        
+        if (is_object($item))
+            $item = $item->getDocumentId()->getId();
+
+        $this->join('INNER JOIN', 'mata_categoryitem', 'mata_categoryitem.CategoryId = mata_category.Id');
+        $this->andWhere(['DocumentId' => $item]);
+        return $this;
+    }
+
 
 }

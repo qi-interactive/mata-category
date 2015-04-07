@@ -36,10 +36,10 @@ class Bootstrap extends \mata\base\Bootstrap {
 		if (empty($categories = Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID)))
 			return;
 
-		$documentId = $model->getDocumentId();
+		$documentId = $model->getDocumentId()->getId();
 
 		CategoryItem::deleteAll([
-			"DocumentId" => $documentId
+			"DocumentId" => $documentId->getId()
 			]);
 
 		foreach ($categories as $category) {

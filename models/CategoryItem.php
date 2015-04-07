@@ -81,7 +81,7 @@ class CategoryItemQuery extends ActiveQuery {
     public function forItem($item) {
 
         if (is_object($item))
-            $item = $item->getDocumentId();
+            $item = $item->getDocumentId()->getId();
 
         $this->andWhere(['DocumentId' => $item]);
         return $this;
