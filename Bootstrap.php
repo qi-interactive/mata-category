@@ -42,33 +42,42 @@ class Bootstrap extends \mata\base\Bootstrap {
 			"DocumentId" => $documentId
 			]);
 
-		foreach ($categories as $category) {
-
-			$categoryModel = Category::find()->where(["Name" => $category, 'Grouping' => Category::generateGroupingFromObject($model)])->one();
-
-			if ($categoryModel == null) {
-				$categoryModel = new Category();
-				$categoryModel->attributes = [
-				"Name" => Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID),
-				"URI" => Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID),
-				"Grouping" => Category::generateGroupingFromObject($model)
-				]; 
-
-				if (!$categoryModel->save())
-					throw new \yii\web\ServerErrorHttpException($categoryModel->getTopError());
-
+		if(is_array($categories)) {
+			foreach ($categories as $category) {
+				$this->saveCategory($category, $model, $documentId);	
 			}
-			
-			$categoryItem = new CategoryItem();
-			$categoryItem->attributes = [
-			"CategoryId" => $categoryModel->Id,
-			"DocumentId" => $documentId
-			];
-			
-			if ($categoryItem->save() == false)
-				throw new \yii\web\ServerErrorHttpException($categoryItem->getTopError());
-
+		} elseif(is_string($categories)) {
+			$this->saveCategory($categories, $model, $documentId);
 		}
 
+		
+
+	}
+
+	private function saveCategory($category, $model, $documentId)
+	{
+		$categoryModel = Category::find()->where(["Name" => $category, 'Grouping' => Category::generateGroupingFromObject($model)])->one();
+
+		if ($categoryModel == null) {
+			$categoryModel = new Category();
+			$categoryModel->attributes = [
+			"Name" => Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID),
+			"URI" => Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID),
+			"Grouping" => Category::generateGroupingFromObject($model)
+			]; 
+
+			if (!$categoryModel->save())
+				throw new \yii\web\ServerErrorHttpException($categoryModel->getTopError());
+
+		}
+		
+		$categoryItem = new CategoryItem();
+		$categoryItem->attributes = [
+		"CategoryId" => $categoryModel->Id,
+		"DocumentId" => $documentId
+		];
+		
+		if ($categoryItem->save() == false)
+			throw new \yii\web\ServerErrorHttpException($categoryItem->getTopError());
 	}
 }
