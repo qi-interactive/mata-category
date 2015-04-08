@@ -50,8 +50,7 @@ class CategoryItem extends \matacms\db\ActiveRecord {
     {
         return [
         [['CategoryId', 'DocumentId', 'Order'], 'required'],
-        [['Order'], 'integer'],
-        [['DocumentId'], 'string', 'max' => 64]
+        [['Order'], 'integer']
         ];
     }
 

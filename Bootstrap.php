@@ -39,7 +39,7 @@ class Bootstrap extends \mata\base\Bootstrap {
 		$documentId = $model->getDocumentId()->getId();
 
 		CategoryItem::deleteAll([
-			"DocumentId" => $documentId->getId()
+			"DocumentId" => $documentId
 			]);
 
 		foreach ($categories as $category) {
