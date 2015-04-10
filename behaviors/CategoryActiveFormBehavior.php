@@ -12,9 +12,9 @@ class CategoryActiveFormBehavior extends  \yii\base\Behavior {
 
 	public function category($options = []) {
 		if(isset($this->owner->options['class'])) {
-		    $this->owner->options['class'] .= ' multi-choice-dropdown half-max-width-item';
+		    $this->owner->options['class'] .= ' multi-choice-dropdown partial-max-width-item';
 		} else {
-			$this->owner->options['class'] = ' multi-choice-dropdown half-max-width-item';
+			$this->owner->options['class'] = ' multi-choice-dropdown partial-max-width-item';
 		}
 
 
