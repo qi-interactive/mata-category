@@ -25,6 +25,12 @@ class Category extends \matacms\db\ActiveRecord {
         return '{{%mata_category}}';
     }
 
+    public function behaviors() {
+      return [
+     
+      ];
+    }
+
     public static function find() {
       return new CategoryQuery(get_called_class());
   }
