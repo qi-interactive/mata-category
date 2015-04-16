@@ -17,13 +17,11 @@ class CategoryActiveFormBehavior extends  \yii\base\Behavior {
 			$this->owner->options['class'] = ' multi-choice-dropdown partial-max-width-item';
 		}
 
-
 		$options = array_merge($this->owner->inputOptions, $options);
 
-
 		$this->owner->adjustLabelFor($options);
-		$this->owner->labelOptions["label"] = "Category"; 
-		$this->owner->parts['{input}'] = Html::activeCategoryField($this->owner->model, $options);
+		// $this->owner->labelOptions["label"] = "Category"; 
+		$this->owner->parts['{input}'] = Html::activeCategoryField($this->owner->model, $this->owner->attribute, $options);
 
 		return $this->owner;
 	}
