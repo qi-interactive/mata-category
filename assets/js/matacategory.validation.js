@@ -22,17 +22,6 @@ matacategory.validation = (function ($) {
         },
 
         mandatory: function ($form, value, messages, options) {
-            // if (options.skipOnEmpty && pub.isEmpty(value)) {
-            //     return;
-            // }
-
-            // var items = $form.find('select#' + options.id);
-            // if(media.length == 0) {
-            //     pub.addMessage(messages, options.message, value);
-            // } else if(this.isEmpty(media.val())) {
-            //     pub.addMessage(messages, options.message, value);
-            // }
-
             var valid = false;
             if (options.requiredValue === undefined) {
                 var isString = typeof value == 'string' || value instanceof String;
@@ -47,8 +36,6 @@ matacategory.validation = (function ($) {
                 pub.addMessage(messages, options.message, value);
             }
         }
-
-
         
     };
 
