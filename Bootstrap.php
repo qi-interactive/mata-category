@@ -5,6 +5,7 @@ namespace mata\category;
 use Yii;
 use mata\category\behaviors\CategoryActiveFormBehavior;
 use yii\base\Event;
+use yii\base\Model;
 use matacms\widgets\ActiveField;
 use mata\base\MessageEvent;
 use mata\category\models\Category;
@@ -27,6 +28,20 @@ class Bootstrap extends \mata\base\Bootstrap {
 
 		Event::on(Controller::class, Controller::EVENT_MODEL_CREATED, function(\matacms\base\MessageEvent $event) {
 			$this->processSave($event->getMessage());
+		});
+
+		Event::on(Model::class, Model::EVENT_BEFORE_VALIDATE, function(\yii\base\ModelEvent $event) {
+
+			$activeValidators = $event->sender->getActiveValidators();
+
+			foreach($activeValidators as $validator) {
+				
+				if(get_class($validator) != 'mata\category\validators\MandatoryCategoryValidator')
+					continue;
+
+				$event->sender->addAdditionalAttribute(CategoryItem::REQ_PARAM_CATEGORY_ID);
+			}
+
 		});
 
 	}

@@ -18,6 +18,7 @@ class MandatoryCategoryValidator extends Validator
     {
 
         parent::init();
+        $this->skipOnEmpty = false;
         if ($this->message === null)
             $this->message = Yii::t('yii', '{attribute} cannot be blank.');
         
@@ -25,12 +26,12 @@ class MandatoryCategoryValidator extends Validator
 
     public function validateAttribute($model, $attribute)
     {
-        
+
         $categories = \Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID);
 
         if(empty($categories)) {
             $model->addError($attribute, \Yii::t('yii', '{attribute} cannot be blank.', ['attribute' => Inflector::camel2words($attribute)]));
-        }     
+        }
 
     }
 
