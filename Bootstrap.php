@@ -31,15 +31,15 @@ class Bootstrap extends \mata\base\Bootstrap {
 		});
 
 		Event::on(Model::class, Model::EVENT_BEFORE_VALIDATE, function(\yii\base\ModelEvent $event) {
+			if($event->sender instanceof \mata\db\ActiveRecord) {
+				$activeValidators = $event->sender->getActiveValidators();
 
-			$activeValidators = $event->sender->getActiveValidators();
+				foreach($activeValidators as $validator) {					
+					if(get_class($validator) != 'mata\category\validators\MandatoryCategoryValidator')
+						continue;
 
-			foreach($activeValidators as $validator) {
-				
-				if(get_class($validator) != 'mata\category\validators\MandatoryCategoryValidator')
-					continue;
-
-				$event->sender->addAdditionalAttribute(CategoryItem::REQ_PARAM_CATEGORY_ID);
+					$event->sender->addAdditionalAttribute(CategoryItem::REQ_PARAM_CATEGORY_ID);
+				}
 			}
 
 		});
