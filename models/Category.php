@@ -43,7 +43,8 @@ class Category extends \matacms\db\ActiveRecord {
         return [
         [['Name', 'URI', 'Grouping'], 'required'],
         [['Name'], 'string'],
-        [['URI'], 'string', 'max' => 255]
+        [['URI', 'Name'], 'string', 'max' => 255],
+        [['Grouping'], 'string', 'max' => 128]
         ];
     }
 

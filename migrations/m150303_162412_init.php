@@ -20,9 +20,9 @@ class m150303_162412_init extends Migration {
 	public function safeUp() {
 		$this->createTable('{{%mata_category}}', [
 			'Id'                   => Schema::TYPE_PK,
-			'Name'             => Schema::TYPE_TEXT . ' NOT NULL',
+			'Name'             => Schema::TYPE_STRING . '(255) NOT NULL',
 			'URI'	=> Schema::TYPE_STRING . '(255) NOT NULL',
-			'Grouping' => Schema::TYPE_STRING . '(255) NOT NULL'
+			'Grouping' => Schema::TYPE_STRING . '(128) NOT NULL'
 			]);
 
 		$this->createTable('{{%mata_categoryitem}}', [
