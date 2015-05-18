@@ -1,4 +1,10 @@
 <?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace mata\category\models;
 
@@ -36,16 +42,10 @@ class CategoryItem extends \matacms\db\ActiveRecord {
      return new CategoryItemQuery(get_called_class());
  }
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName() {
         return '{{%mata_categoryitem}}';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -54,9 +54,6 @@ class CategoryItem extends \matacms\db\ActiveRecord {
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -73,7 +70,6 @@ class CategoryItem extends \matacms\db\ActiveRecord {
         return $this->hasOne(Category::className(), ['Id' => 'CategoryId']);
     }
 }
-
 
 class CategoryItemQuery extends ActiveQuery {
 

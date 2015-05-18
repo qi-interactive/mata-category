@@ -1,4 +1,10 @@
-<?php 
+<?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace mata\category;
 
@@ -43,7 +49,6 @@ class Bootstrap extends \mata\base\Bootstrap {
 			}
 
 		});
-
 	}
 
 	private function processSave($model) {
@@ -64,9 +69,6 @@ class Bootstrap extends \mata\base\Bootstrap {
 		} elseif(is_string($categories)) {
 			$this->saveCategory($categories, $model, $documentId);
 		}
-
-		
-
 	}
 
 	private function saveCategory($category, $model, $documentId)

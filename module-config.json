@@ -1,6 +1,6 @@
 {
     "name": "Category",
-    "description": "Category management for MATA CMS",
+    "description": "Manages categories for Active Record models",
     "icon" : "/images/module-icon.svg",
-    "version" : 1.0
+    "version" : "1.0.0-alpha"
 }

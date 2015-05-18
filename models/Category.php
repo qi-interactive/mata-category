@@ -1,4 +1,10 @@
 <?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace mata\category\models;
 
@@ -17,9 +23,6 @@ use yii\db\ActiveQuery;
  */
 class Category extends \matacms\db\ActiveRecord {
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return '{{%mata_category}}';
@@ -35,9 +38,6 @@ class Category extends \matacms\db\ActiveRecord {
       return new CategoryQuery(get_called_class());
   }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -48,9 +48,6 @@ class Category extends \matacms\db\ActiveRecord {
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels() {
         return [
         'Id' => 'ID',
@@ -71,8 +68,8 @@ class Category extends \matacms\db\ActiveRecord {
     }
 }
 
-
 class CategoryQuery extends ActiveQuery {
+    
     /**
      *  Categories for various models / groups will be stored in one table. 
      * The grouping allows to differentiate between categories belonging to one, but not another.
@@ -103,6 +100,4 @@ class CategoryQuery extends ActiveQuery {
         $this->andWhere(['DocumentId' => $item]);
         return $this;
     }
-
-
 }

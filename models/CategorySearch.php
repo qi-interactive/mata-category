@@ -1,4 +1,10 @@
 <?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace mata\category\models;
 
@@ -11,9 +17,7 @@ use mata\category\models\Category;
  * CategorySearch represents the model behind the search form about `\mata\category\models\Category`.
  */
 class CategorySearch extends Category {
-    /**
-     * @inheritdoc
-     */
+
     public function rules()
     {
         return [
@@ -22,9 +26,6 @@ class CategorySearch extends Category {
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class

@@ -1,4 +1,10 @@
 <?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace mata\category\validators;
 
@@ -48,5 +54,4 @@ class MandatoryCategoryValidator extends Validator
         MandatoryCategoryValidationAsset::register($view);
         return 'matacategory.validation.mandatory($form, value, messages, ' . Json::encode($options) . ');';
     }
-
 }
