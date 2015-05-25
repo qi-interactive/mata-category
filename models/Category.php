@@ -10,7 +10,7 @@ namespace mata\category\models;
 
 use Yii;
 use mata\category\models\CategoryItem;
-use yii\db\ActiveQuery;
+use matacms\db\ActiveQuery;
 
 /**
  * This is the model class for table "{{%mata_category}}".

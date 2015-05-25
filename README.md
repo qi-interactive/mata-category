@@ -21,6 +21,9 @@ php yii migrate/up --migrationPath=@vendor/mata/mata-category/migrations
 Changelog
 ---------
 
+## To be released
+- [[Category]] model uses [[matacms\db\ActiveQuery]]
+
 ## 1.0.0-alpha, May 18, 2015
 
 - Initial release.
