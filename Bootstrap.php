@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * @link http://www.matacms.com/
  * @copyright Copyright (c) 2015 Qi Interactive Limited
@@ -36,11 +36,15 @@ class Bootstrap extends \mata\base\Bootstrap {
 			$this->processSave($event->getMessage());
 		});
 
+        Event::on(Controller::class, Controller::EVENT_MODEL_DELETED, function(\matacms\base\MessageEvent $event) {
+			$this->processDelete($event->getMessage());
+		});
+
 		Event::on(Model::class, Model::EVENT_BEFORE_VALIDATE, function(\yii\base\ModelEvent $event) {
 			if($event->sender instanceof \mata\db\ActiveRecord) {
 				$activeValidators = $event->sender->getActiveValidators();
 
-				foreach($activeValidators as $validator) {					
+				foreach($activeValidators as $validator) {
 					if(get_class($validator) != 'mata\category\validators\MandatoryCategoryValidator')
 						continue;
 
@@ -64,7 +68,7 @@ class Bootstrap extends \mata\base\Bootstrap {
 
 		if(is_array($categories)) {
 			foreach ($categories as $category) {
-				$this->saveCategory($category, $model, $documentId);	
+				$this->saveCategory($category, $model, $documentId);
 			}
 		} elseif(is_string($categories)) {
 			$this->saveCategory($categories, $model, $documentId);
@@ -81,20 +85,29 @@ class Bootstrap extends \mata\base\Bootstrap {
 			"Name" => Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID),
 			"URI" => Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID),
 			"Grouping" => Category::generateGroupingFromObject($model)
-			]; 
+			];
 
 			if (!$categoryModel->save())
 				throw new \yii\web\ServerErrorHttpException($categoryModel->getTopError());
 
 		}
-		
+
 		$categoryItem = new CategoryItem();
 		$categoryItem->attributes = [
 		"CategoryId" => $categoryModel->Id,
 		"DocumentId" => $documentId
 		];
-		
+
 		if ($categoryItem->save() == false)
 			throw new \yii\web\ServerErrorHttpException($categoryItem->getTopError());
+	}
+
+    private function processDelete($model) {
+
+		$documentId = $model->getDocumentId()->getId();
+
+		CategoryItem::deleteAll([
+			"DocumentId" => $documentId
+			]);
 	}
 }
