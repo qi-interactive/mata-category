@@ -21,6 +21,10 @@ php yii migrate/up --migrationPath=@vendor/mata/mata-category/migrations
 Changelog
 ---------
 
+## 1.0.1.1-alpha, September 7, 2016
+
+- Added migration (alter DocumentId from 64 to 128 characters)
+
 ## 1.0.1-alpha, August 21, 2015
 
 - Added deletion of categories for removed document
